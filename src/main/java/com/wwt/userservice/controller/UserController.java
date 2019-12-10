@@ -38,7 +38,11 @@ public class UserController {
 
     @GetMapping("/users/email/{email}")
     public User getUserByEmail(@PathVariable(name = "email") String email) {
-        return userRepository.findByEmail(email).get(0);
+        try{
+            return userRepository.findByEmail(email).get(0);
+        } catch (Exception e){
+            return null;
+        }
     }
 
     @GetMapping("/users/{id}")
