@@ -77,6 +77,8 @@ public class LoginController {
         content.put("id", user.getId());
         content.put("token", token);
         content.put("username", user.getUserName());
+        content.put("email", user.getEmail());
+        content.put("points", user.getPoint());
         content.put("avatar", user.getPhoto());
         content.put("eid", user.getType() == null ? "" : user.getType());
         return Success.successResponse(content);
