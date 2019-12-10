@@ -22,11 +22,13 @@ public class UserController {
         try {
             if (userRepository.findByEmail(user.getEmail()).size() > 0)
                 return Error.errorResponse(1);
+            if(user.getPhoto()==null)
+                 user.setPhoto("https://s2.ax1x.com/2019/12/10/QD6MUH.png");
             User newUser = userRepository.insert(user);
             JSONObject content = new JSONObject();
             content.put("id", newUser.getId());
             content.put("username", newUser.getUserName());
-            content.put("avatar", newUser.getPhoto()==null?"https://s2.ax1x.com/2019/12/10/QD6MUH.png":newUser.getPhoto());
+            content.put("avatar", newUser.getPhoto());
             content.put("eid", newUser.getType() == null ? "" : newUser.getType());
             return Success.successResponse(content);
         } catch (Exception exception) {
