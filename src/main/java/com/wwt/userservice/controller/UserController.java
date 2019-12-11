@@ -24,6 +24,7 @@ public class UserController {
                 return Error.errorResponse(1);
             if(user.getPhoto()==null)
                  user.setPhoto("https://s2.ax1x.com/2019/12/10/QD6MUH.png");
+            user.setPoint("0");
             User newUser = userRepository.insert(user);
             JSONObject content = new JSONObject();
             content.put("id", newUser.getId());
@@ -36,12 +37,42 @@ public class UserController {
         }
     }
 
+    @PatchMapping(value="/users/{id}")
+    public JSONObject updateUser(@RequestBody User user, @RequestHeader("userId") String userId, @PathVariable(name = "id")String id) {
+        try {
+            if(userId==null || userId.equals(""))
+                return Error.errorResponse(3);
+            if(!userId.equals(id))
+                return Error.errorResponse(2);
+            User oldUser = userRepository.findById(id).get();
+            if(user.getEmail()!=null) {
+                int tmpn = userRepository.findByEmail(user.getEmail()).size();
+                if(tmpn>0)
+                    return Error.errorResponse(1);
+                oldUser.setEmail(user.getEmail());
+            }
+            if(user.getUserName()!=null) {
+                oldUser.setUserName(user.getUserName());
+            }
+            if(user.getPhoto()!=null) {
+                oldUser.setPhoto(user.getPhoto());
+            }
+            if(user.getPoint()!=null) {
+                oldUser.setPoint(user.getPoint());
+            }
+            userRepository.save(oldUser);
+            return Success.successResponse(JSONObject.parseObject(JSONObject.toJSONString(oldUser)));
+        } catch (Exception e){
+            return Error.errorResponse(0);
+        }
+    }
+
     @GetMapping("/users/email/{email}")
     public User getUserByEmail(@PathVariable(name = "email") String email) {
         try{
             return userRepository.findByEmail(email).get(0);
         } catch (Exception e){
-            return null;
+            return new User();
         }
     }
 
