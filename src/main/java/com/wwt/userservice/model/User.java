@@ -31,6 +31,8 @@ public class User implements Serializable {
 
     private Set<Paper> favourites;
 
+    private Set<Paper> purchase;
+
     public String getId() {
         return id;
     }
@@ -93,6 +95,14 @@ public class User implements Serializable {
 
     public void setFavourites(Set<Paper> favourites) {
         this.favourites = favourites;
+    }
+
+    public Set<Paper> getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Set<Paper> purchase) {
+        this.purchase = purchase;
     }
 
     @Override

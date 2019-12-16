@@ -1,6 +1,7 @@
 package com.wwt.userservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wwt.userservice.model.Paper;
 import com.wwt.userservice.model.User;
 import com.wwt.userservice.model.UserRepository;
 import com.wwt.userservice.utils.Error;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashSet;
 
 /**
  * LoginController
@@ -45,6 +48,8 @@ public class LoginController {
             content.put("point", user.getPoint());
             content.put("avatar", user.getPhoto());
             content.put("eid", user.getType() == null ? "" : user.getType());
+            content.put("favourite", user.getFavourites() == null? new HashSet<Paper>():user.getFavourites());
+            content.put("purchase", user.getPurchase() == null? new HashSet<Paper>(): user.getPurchase());
             return Success.successResponse(content);
         } catch (Exception e) {
             return Error.errorResponse(0);
