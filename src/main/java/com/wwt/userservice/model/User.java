@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Document("users")
 public class User implements Serializable {
@@ -26,6 +28,8 @@ public class User implements Serializable {
     private String photo;   // 用户头像图片的url
 
     private String point;
+
+    private Set<Paper> favourites;
 
     public String getId() {
         return id;
@@ -83,6 +87,14 @@ public class User implements Serializable {
         this.point = point;
     }
 
+    public Set<Paper> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(Set<Paper> favourites) {
+        this.favourites = favourites;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -93,6 +105,7 @@ public class User implements Serializable {
                 ", type='" + type + '\'' +
                 ", photo='" + photo + '\'' +
                 ", point='" + point + '\'' +
+                ", favourites=" + favourites +
                 '}';
     }
 }

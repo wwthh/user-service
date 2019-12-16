@@ -1,7 +1,6 @@
 package com.wwt.userservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wwt.userservice.model.Certification;
 import com.wwt.userservice.model.User;
 import com.wwt.userservice.model.UserRepository;
 import com.wwt.userservice.utils.Error;
@@ -102,4 +101,12 @@ public class UserController {
 class UpdatePasswordBody{
     String oldPassword;
     String newPassword;
+
+    @Override
+    public String toString() {
+        return "UpdatePasswordBody{" +
+                "oldPassword='" + oldPassword + '\'' +
+                ", newPassword='" + newPassword + '\'' +
+                '}';
+    }
 }
