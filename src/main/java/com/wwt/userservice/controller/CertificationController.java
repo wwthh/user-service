@@ -48,6 +48,9 @@ public class CertificationController {
             JSONObject tmp = UserIdCertification.run(userId, id);
             if(tmp!=null) return tmp;
             certificationRepository.removeByUserId(userId);
+            User user = userRepository.findById(userId).get();
+            user.setType("");
+            userRepository.save(user);
             return Success.successResponse(new JSONObject());
         }catch(Exception e) {
             return Error.errorResponse(0);
