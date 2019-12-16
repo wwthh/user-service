@@ -6,7 +6,7 @@ public class Paper {
 
     private String id;
     private String title;
-    private Date addTime;
+    private long addTime;
 
     public String getId() {
         return id;
@@ -24,11 +24,11 @@ public class Paper {
         this.title = title;
     }
 
-    public Date getAddTime() {
+    public long getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(Date addTime) {
+    public void setAddTime(long addTime) {
         this.addTime = addTime;
     }
 

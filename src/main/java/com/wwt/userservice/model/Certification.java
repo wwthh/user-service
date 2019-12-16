@@ -28,10 +28,10 @@ public class Certification {
     private List<Tag> tags;
 
     @Field("apply_time")
-    private Date applyDate;
+    private long applyDate;
 
     @Field("deal_time")
-    private Date dealDate;
+    private long dealDate;
 
     @Field("state")
     private String state;
@@ -76,19 +76,19 @@ public class Certification {
         this.tags = tags;
     }
 
-    public Date getApplyDate() {
+    public long getApplyDate() {
         return applyDate;
     }
 
-    public void setApplyDate(Date applyDate) {
+    public void setApplyDate(long applyDate) {
         this.applyDate = applyDate;
     }
 
-    public Date getDealDate() {
+    public long getDealDate() {
         return dealDate;
     }
 
-    public void setDealDate(Date dealDate) {
+    public void setDealDate(long dealDate) {
         this.dealDate = dealDate;
     }
 

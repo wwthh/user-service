@@ -33,7 +33,7 @@ public class CertificationController {
             oldUser.setType("-1");
             userRepository.save(oldUser);
             certification.setUserId(id);
-            certification.setApplyDate(new Date());
+            certification.setApplyDate(System.currentTimeMillis());
             certification.setState("ing");
             certificationRepository.insert(certification);
             return Success.successResponse(new JSONObject());

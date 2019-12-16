@@ -25,7 +25,7 @@ public class FavouriteController {
             if(papers == null || papers.size() ==0) return Error.errorResponse(1);
             User user = userRepository.findById(userId).get();
             for(int i = 0;i<papers.size();i++){
-                papers.get(i).setAddTime(new Date());
+                papers.get(i).setAddTime(System.currentTimeMillis());
             }
             Set<Paper> oldPapers = user.getFavourites();
             if(oldPapers==null)
