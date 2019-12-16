@@ -1,11 +1,13 @@
 package com.wwt.userservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wwt.userservice.model.Certification;
 import com.wwt.userservice.model.User;
 import com.wwt.userservice.model.UserRepository;
 import com.wwt.userservice.utils.Error;
 import com.wwt.userservice.utils.Success;
 
+import com.wwt.userservice.utils.UserIdCertification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,10 +42,8 @@ public class UserController {
     @PatchMapping(value="/users/{id}")
     public JSONObject updateUser(@RequestBody User user, @RequestHeader("userId") String userId, @PathVariable(name = "id")String id) {
         try {
-            if(userId==null || userId.equals(""))
-                return Error.errorResponse(3);
-            if(!userId.equals(id))
-                return Error.errorResponse(2);
+            JSONObject tmp = UserIdCertification.run(userId, id);
+            if(tmp!=null) return tmp;
             User oldUser = userRepository.findById(id).get();
             if(user.getEmail()!=null) {
                 int tmpn = userRepository.findByEmail(user.getEmail()).size();
@@ -80,4 +80,26 @@ public class UserController {
     public User getUser(@PathVariable(name = "id") String id) {
         return userRepository.findById(id).get();
     }
+
+    @PatchMapping("/users/{id}/password")
+    public JSONObject updatePassword(@RequestHeader("userId") String userId, @PathVariable("id")String id, @RequestBody UpdatePasswordBody requestBody) {
+        try {
+            JSONObject tmp = UserIdCertification.run(userId, id);
+            if(tmp!=null) return tmp;
+            User oldUser = userRepository.findById(userId).get();
+            if(!oldUser.getPassword().equals(requestBody.oldPassword)) {
+                return Error.errorResponse(1);
+            }
+            oldUser.setPassword(requestBody.newPassword);
+            userRepository.save(oldUser);
+            return Success.successResponse(new JSONObject());
+        }catch(Exception e) {
+            return Error.errorResponse(0);
+        }
+    }
+}
+
+class UpdatePasswordBody{
+    String oldPassword;
+    String newPassword;
 }
