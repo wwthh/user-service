@@ -38,6 +38,13 @@ public class UserController {
         }
     }
 
+    @PatchMapping("/users/{id}/type/{expert_id}")
+    public JSONObject updateType(@PathVariable(name = "id") String id, @PathVariable(name = "expert_id")String expertId){
+        User user = userRepository.findById(id).get();
+        user.setType(expertId);
+        return JSONObject.parseObject("{\"status\": \"ok\"}");
+    }
+
     @PatchMapping(value="/users/{id}")
     public JSONObject updateUser(@RequestBody User user, @RequestHeader("userId") String userId, @PathVariable(name = "id")String id) {
         try {
