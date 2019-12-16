@@ -59,8 +59,12 @@ public class CertificationController {
         try {
             JSONObject tmp = UserIdCertification.run(userId, id);
             if(tmp!=null) return tmp;
-            Certification certification = certificationRepository.findByUserId(userId).get(0);
-            return Success.successResponse(JSONObject.parseObject(JSONObject.toJSONString(certification)));
+            try {
+                Certification certification = certificationRepository.findByUserId(userId).get(0);
+                return Success.successResponse(JSONObject.parseObject(JSONObject.toJSONString(certification)));
+            } catch (Exception e) {
+                return Error.errorResponse(1);
+            }
         }catch(Exception e) {
             return Error.errorResponse(0);
         }
