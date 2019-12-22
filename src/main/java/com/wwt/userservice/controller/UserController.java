@@ -67,7 +67,9 @@ public class UserController {
                 oldUser.setPoint(user.getPoint());
             }
             userRepository.save(oldUser);
-            return Success.successResponse(JSONObject.parseObject(JSONObject.toJSONString(oldUser)));
+            JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(oldUser));
+            jsonObject.put("password", null);
+            return Success.successResponse(jsonObject);
         } catch (Exception e){
             return Error.errorResponse(0);
         }
@@ -108,6 +110,22 @@ public class UserController {
 class UpdatePasswordBody{
     String oldPassword;
     String newPassword;
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
     @Override
     public String toString() {

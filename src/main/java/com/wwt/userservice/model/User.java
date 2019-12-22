@@ -20,7 +20,7 @@ public class User implements Serializable {
     @Indexed
     private String userName;
 
-    @Field("pass")
+    @Field("password")
     private String password;
 
     private String type;    // 专家ID，如果该值为null，表示这是普通用户，不是专家
